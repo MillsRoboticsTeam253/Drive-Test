@@ -12,7 +12,7 @@
 package org.usfirst.frc253.driveTest.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.GenericHID;
 import org.usfirst.frc253.driveTest.Robot;
 
 /**
@@ -43,13 +43,20 @@ public class TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double left = Robot.oi.getLeftJoystick().getY();
-    	double right = Robot.oi.getRightJoystick().getY();
+    	double left;
+    	double right;
+    	if(Math.abs(Robot.oi.getLeftJoystickY())<=0.125){
+    		left = -Robot.oi.getRightJoystickX();
+    		right = Robot.oi.getRightJoystickX();
+    	}else{
+	    	left = Robot.oi.getLeftJoystickY()+Robot.oi.getLeftJoystickY()*Robot.oi.getRightJoystickX();//.getY();
+	    	right = Robot.oi.getLeftJoystickY()-Robot.oi.getLeftJoystickY()*Robot.oi.getRightJoystickX();//.getY();
+    	}
     	
+    	Robot.driveTrain.drive(left, right);
     	SmartDashboard.putNumber("Left Joystick", left);
     	SmartDashboard.putNumber("Right Joystick", right);
     	
-    	Robot.driveTrain.drive(left, right);
     	
     	double leftSpeed = Robot.driveTrain.getTalonLeft().getSelectedSensorVelocity(0);
     	double rightSpeed = Robot.driveTrain.getTalonRight().getSelectedSensorVelocity(0);
@@ -57,15 +64,6 @@ public class TankDrive extends Command {
     	SmartDashboard.putNumber("Left Speed", leftSpeed);
     	SmartDashboard.putNumber("Right Speed", rightSpeed);
     	
-    	double leftPos = Robot.driveTrain.getTalonLeft().getSelectedSensorPosition(0);
-    	double rightPos = Robot.driveTrain.getTalonRight().getSelectedSensorPosition(0);
-    	
-    	if(Robot.oi.getRightJoystick().getRawButton(2)){
-    		Robot.driveTrain.getTalonLeft().setSelectedSensorPosition(0, 0, 0);
-    		Robot.driveTrain.getTalonRight().setSelectedSensorPosition(0, 0, 0);
-    	}
-    	SmartDashboard.putNumber("Left Position", -leftPos);
-    	SmartDashboard.putNumber("Right Position", rightPos);
     }
 
     // Make this return true when this Command no longer needs to run execute()

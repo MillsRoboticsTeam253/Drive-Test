@@ -44,7 +44,7 @@ public class ReadSensors extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putBoolean("Limit Switch", Robot.sensors.readLimitSwitch());
-   
+    	SmartDashboard.putNumber("navX Yaw", Robot.sensors.getYaw());
     }
 
     // Make this return true when this Command no longer needs to run execute()
