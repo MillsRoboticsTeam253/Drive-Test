@@ -87,6 +87,10 @@ public class OI {
         Bawb2 = new JoystickButton(controller, 3);
         Bawb2.whenPressed(new PathArray());
         
+        if(controller.getTriggerAxis(GenericHID.Hand.kRight)!=0){
+        	System.out.println("RT is working");
+        }
+        
         /*Bawb3 = new JoystickButton(controller, 4);
         Bawb3.whileHeld(new ResetStraightDrive());*/
         
