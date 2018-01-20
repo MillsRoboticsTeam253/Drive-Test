@@ -30,16 +30,9 @@ public class Intake extends Subsystem {
 
 	private final Spark sparkLeft = RobotMap.sparkLeft;
 	private final Spark sparkRight = RobotMap.sparkRight;
-    public Intake(){
-    
-    	
-    	}
+    public Intake(){}
 
-    public void initDefaultCommand() {
-    	
-
-
-    }
+    public void initDefaultCommand() {}
     public void suckIn(){
     	sparkLeft.set(.5);
     	sparkRight.set(-.5);

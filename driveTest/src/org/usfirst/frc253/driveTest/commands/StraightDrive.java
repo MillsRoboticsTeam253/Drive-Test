@@ -51,15 +51,13 @@ public class StraightDrive extends PIDCommand {
     	SmartDashboard.putNumber("PID Setpoint", getPIDController().getSetpoint());
     	SmartDashboard.putNumber("PID get Output", getPIDController().get());
     	
-    	double leftPos = Robot.driveTrain.getTalonLeft().getSelectedSensorPosition(0);
-    	double rightPos = Robot.driveTrain.getTalonRight().getSelectedSensorPosition(0);
+    	
     	
     	/*if(Robot.oi.controller.getTriggerAxis(GenericHID.Hand.kRight)!= 0){
     		Robot.driveTrain.getTalonLeft().setSelectedSensorPosition(0, 0, 0);
     		Robot.driveTrain.getTalonRight().setSelectedSensorPosition(0, 0, 0);
     	}*/
-    	SmartDashboard.putNumber("Left Position", -leftPos);
-    	SmartDashboard.putNumber("Right Position", rightPos);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

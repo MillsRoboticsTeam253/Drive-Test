@@ -45,6 +45,12 @@ public class ReadSensors extends Command {
     protected void execute() {
     	SmartDashboard.putBoolean("Limit Switch", Robot.sensors.readLimitSwitch());
     	SmartDashboard.putNumber("navX Yaw", Robot.sensors.getYaw());
+    	
+    	double leftPos = Robot.driveTrain.getTalonLeft().getSelectedSensorPosition(0);
+    	double rightPos = Robot.driveTrain.getTalonRight().getSelectedSensorPosition(0);
+    	
+    	SmartDashboard.putNumber("Left Position", -leftPos);
+    	SmartDashboard.putNumber("Right Position", rightPos);
     }
 
     // Make this return true when this Command no longer needs to run execute()
