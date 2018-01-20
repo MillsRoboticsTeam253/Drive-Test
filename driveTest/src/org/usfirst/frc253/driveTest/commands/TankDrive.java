@@ -49,8 +49,8 @@ public class TankDrive extends Command {
     		left = -Robot.oi.getRightJoystickX();
     		right = Robot.oi.getRightJoystickX();
     	}else{
-	    	left = Robot.oi.getLeftJoystickY()+Robot.oi.getLeftJoystickY()*Robot.oi.getRightJoystickX();//.getY();
-	    	right = Robot.oi.getLeftJoystickY()-Robot.oi.getLeftJoystickY()*Robot.oi.getRightJoystickX();//.getY();
+		    left = Robot.oi.getLeftJoystickY()+Robot.oi.getLeftJoystickY()*Robot.oi.getRightJoystickX();//.getY();
+		    right = Robot.oi.getLeftJoystickY()-Robot.oi.getLeftJoystickY()*Robot.oi.getRightJoystickX();//.getY();
     	}
     	
     	Robot.driveTrain.drive(left, right);

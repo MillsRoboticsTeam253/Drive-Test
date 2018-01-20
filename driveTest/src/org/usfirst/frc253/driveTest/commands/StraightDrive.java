@@ -11,7 +11,9 @@
 
 package org.usfirst.frc253.driveTest.commands;
 import org.usfirst.frc253.driveTest.Robot;
+import org.usfirst.frc253.driveTest.*;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -52,10 +54,10 @@ public class StraightDrive extends PIDCommand {
     	double leftPos = Robot.driveTrain.getTalonLeft().getSelectedSensorPosition(0);
     	double rightPos = Robot.driveTrain.getTalonRight().getSelectedSensorPosition(0);
     	
-    	if(Robot.oi.getRightJoystick().getRawButton(2)){
+    	/*if(Robot.oi.controller.getTriggerAxis(GenericHID.Hand.kRight)!= 0){
     		Robot.driveTrain.getTalonLeft().setSelectedSensorPosition(0, 0, 0);
     		Robot.driveTrain.getTalonRight().setSelectedSensorPosition(0, 0, 0);
-    	}
+    	}*/
     	SmartDashboard.putNumber("Left Position", -leftPos);
     	SmartDashboard.putNumber("Right Position", rightPos);
     }

@@ -43,10 +43,10 @@ public class DriveTrain extends Subsystem {
 
     public DriveTrain(){
     	leftBack.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1, 10); 
-		leftBack.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		leftBack.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 		
 		rightBack.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1, 10); 
-		rightBack.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		rightBack.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
