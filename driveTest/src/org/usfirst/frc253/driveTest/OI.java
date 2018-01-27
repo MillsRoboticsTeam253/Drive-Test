@@ -82,7 +82,7 @@ public class OI {
        
         //Bawb is here
         Bawb = new JoystickButton(controller, 1);
-        Bawb.whileHeld(new StraightDrive(0.15, 0, 0.19));
+        Bawb.whileHeld(new StraightDrive(0.03, 0, 0));
         
         Bawb2 = new JoystickButton(controller, 3);
         Bawb2.whenPressed(new PathArray());
