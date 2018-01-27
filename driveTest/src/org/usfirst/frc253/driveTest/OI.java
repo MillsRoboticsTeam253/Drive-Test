@@ -101,6 +101,16 @@ public class OI {
         SmartDashboard.putData(new ResetStraightDrive());
         SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
         SmartDashboard.putData("TankDrive", new TankDrive());
+        
+        SmartDashboard.putData("Compressor Start", new CompressorStart());
+        SmartDashboard.putData("Compressor Stop", new CompressorStop());
+        
+        SmartDashboard.putData("Solenoid 1 Forward", new Solenoid1Forward());
+        SmartDashboard.putData("Solenoid 1 Reverse", new Solenoid1Reverse());
+        SmartDashboard.putData("Solenoid 2 Forward", new Solenoid2Forward());
+        SmartDashboard.putData("Solenoid 2 Reverse", new Solenoid2Reverse());
+        SmartDashboard.putData("Solenoids Forward", new SolenoidsForward());
+        SmartDashboard.putData("Solenoids Reverse", new SolenoidsReverse());
 
     }
 
