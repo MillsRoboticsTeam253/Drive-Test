@@ -6,8 +6,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc253.driveTest.subsystems.*;
-
+import org.usfirst.frc253.driveTest.OI;
 public class ResetStraightDrive extends Command {
+	
+	public ResetStraightDrive(){
+		requires(Robot.driveTrain);
+	}
 	
 	protected void execute() {
 		Robot.driveTrain.getTalonLeft().setSelectedSensorPosition(0, 0, 0);

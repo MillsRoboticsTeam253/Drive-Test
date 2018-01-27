@@ -24,7 +24,7 @@ public class StraightDrive extends PIDCommand {
 
     public StraightDrive(double p, double i, double d) {
 		super(p, i, d);
-		
+		requires(Robot.driveTrain);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -45,8 +45,8 @@ public class StraightDrive extends PIDCommand {
     		getPIDController().setSetpoint(Robot.sensors.getYaw());
     		toggle = false;
     	}
-    	//double speed = Robot.oi.getRightJoystick().getY();
-    	double speed= -0.25;
+    	//double speed= -Robot.oi.getLeftJoystickY();
+    	double speed= -0.25 + Robot.oi.getLeftJoystickY();
     	Robot.driveTrain.drive(speed - getPIDController().get(), speed);
     	SmartDashboard.putNumber("PID Setpoint", getPIDController().getSetpoint());
     	SmartDashboard.putNumber("PID get Output", getPIDController().get());

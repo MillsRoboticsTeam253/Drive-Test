@@ -10,6 +10,7 @@
 
 
 package org.usfirst.frc253.driveTest.commands;
+import org.usfirst.frc253.driveTest.OI;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -64,6 +65,10 @@ public class TankDrive extends Command {
     	SmartDashboard.putNumber("Left Speed", leftSpeed);
     	SmartDashboard.putNumber("Right Speed", rightSpeed);
     	
+    	if(Robot.oi.controller.getBButton()){
+    		Robot.driveTrain.getTalonLeft().setSelectedSensorPosition(0, 0, 0);
+    		Robot.driveTrain.getTalonRight().setSelectedSensorPosition(0, 0, 0);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

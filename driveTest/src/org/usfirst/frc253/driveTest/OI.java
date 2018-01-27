@@ -80,9 +80,9 @@ public class OI {
        Eject = new JoystickButton(controller, 5);
        Eject.whileHeld(new EjectOut());
        
-        
+        //Bawb is here
         Bawb = new JoystickButton(controller, 1);
-        Bawb.whileHeld(new StraightDrive(0.1, 0, 0));
+        Bawb.whileHeld(new StraightDrive(0.15, 0, 0.19));
         
         Bawb2 = new JoystickButton(controller, 3);
         Bawb2.whenPressed(new PathArray());
