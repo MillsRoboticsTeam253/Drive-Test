@@ -50,8 +50,8 @@ public class TankDrive extends Command {
     		left = -Robot.oi.getRightJoystickX();
     		right = Robot.oi.getRightJoystickX();
     	}else{
-		    left = Robot.oi.getLeftJoystickY()+Robot.oi.getLeftJoystickY()*Robot.oi.getRightJoystickX();//.getY();
-		    right = Robot.oi.getLeftJoystickY()-Robot.oi.getLeftJoystickY()*Robot.oi.getRightJoystickX();//.getY();
+		    left = Robot.oi.getLeftJoystickY()+Robot.oi.getLeftJoystickY()*Robot.oi.getRightJoystickX();
+		    right = Robot.oi.getLeftJoystickY()-Robot.oi.getLeftJoystickY()*Robot.oi.getRightJoystickX();
     	}
     	
     	Robot.driveTrain.drive(left, right);
@@ -69,6 +69,8 @@ public class TankDrive extends Command {
     		Robot.driveTrain.getTalonLeft().setSelectedSensorPosition(0, 0, 0);
     		Robot.driveTrain.getTalonRight().setSelectedSensorPosition(0, 0, 0);
     	}
+    	
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

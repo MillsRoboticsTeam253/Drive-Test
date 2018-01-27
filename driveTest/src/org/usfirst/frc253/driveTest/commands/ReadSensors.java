@@ -10,6 +10,7 @@
 
 
 package org.usfirst.frc253.driveTest.commands;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -51,6 +52,8 @@ public class ReadSensors extends Command {
     	
     	SmartDashboard.putNumber("Left Position", -leftPos);
     	SmartDashboard.putNumber("Right Position", rightPos);
+    	
+    	SmartDashboard.putNumber("RT Axis", Robot.oi.controller.getTriggerAxis(GenericHID.Hand.kRight));
     }
 
     // Make this return true when this Command no longer needs to run execute()
