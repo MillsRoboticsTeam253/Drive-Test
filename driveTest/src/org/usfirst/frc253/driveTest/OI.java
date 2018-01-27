@@ -93,9 +93,6 @@ public class OI {
         
         /*Bawb3 = new JoystickButton(controller, 4);
         Bawb3.whileHeld(new ResetStraightDrive());*/
-        
-        
-        SmartDashboard.putData(new PathArray());
 
         // SmartDashboard Buttons
         SmartDashboard.putData(new ResetStraightDrive());

@@ -1,22 +1,25 @@
 package org.usfirst.frc253.driveTest.commands;
 import org.usfirst.frc253.driveTest.Robot;
+import org.usfirst.frc253.driveTest.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class Step extends Command {
+public class StepLeft extends PIDCommand {
 
 	private double leftVelocity;
-	private double rightVelocity;
 	
-    public Step(double left, double right) {
+	boolean toggle = true;
+	
+    public StepLeft(double left) {
+    	super(RobotMap.stepkP, 0, RobotMap.stepkD);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
     	this.leftVelocity = left;
-    	this.rightVelocity = right;
     }
 
     // Called just before this Command runs the first time
@@ -26,7 +29,10 @@ public class Step extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.drive(leftVelocity, rightVelocity);
+    	if(toggle){
+    		getPIDController().setSetpoint(leftVelocity);
+    	}
+    	Robot.driveTrain.driveLeft(leftVelocity - (getPIDController().get()/4096.0*RobotMap.wheelCFeet*100));
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,13 +42,23 @@ public class Step extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.drive(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.driveTrain.drive(0, 0);
     }
+
+	@Override
+	protected double returnPIDInput() {
+		// TODO Auto-generated method stub
+		return Robot.driveTrain.getTalonLeft().getSelectedSensorVelocity(0);
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		// TODO Auto-generated method stub
+		SmartDashboard.putNumber("StepLeft PIDOutput", output);
+	}
 }
 

@@ -76,5 +76,15 @@ public class DriveTrain extends Subsystem {
     	rightFront.set(right);
     	rightBack.set(ControlMode.PercentOutput, right);
     }
+    
+    public void driveLeft(double left){
+    	leftFront.set(-left);
+    	leftBack.set(ControlMode.PercentOutput, -left);
+    }
+    
+    public void driveRight(double right){
+    	rightFront.set(right);
+    	rightBack.set(ControlMode.PercentOutput, right);
+    }
 }
 
