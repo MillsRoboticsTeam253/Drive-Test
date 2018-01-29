@@ -15,7 +15,11 @@ public class PathArray extends CommandGroup{
 		};
 		
 		for(int i = 0; i < leftVelocity.length; i++){
-			addSequential(new Step(-leftVelocity[i]/10.0, -rightVelocity[i]/10.0));
+			double leftSpeed = -leftVelocity[i]/10.0;
+			double rightSpeed = -rightVelocity[i]/10.0;
+			addSequential(new Step(
+									leftSpeed, 
+									rightSpeed));
 			
 		}
 	}
