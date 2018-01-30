@@ -44,6 +44,10 @@ public class Pneumatics extends Subsystem {
         // setDefaultCommand(new MySpecialCommand());
     }
     
+    public Pneumatics(){
+    	CompressStop();
+    }
+    
     public void CompressStart(){
     	compressor.setClosedLoopControl(true);
     }
