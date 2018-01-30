@@ -69,11 +69,11 @@ public class RobotMap {
         sparkRight = new Spark(4);
         /*Remember to confirm that the spark number correctly correlates
     	to the right side.*/
-        pneumaticsCompressor1 = new Compressor(0);
+        pneumaticsCompressor1 = new Compressor(1);
         
-        pneumaticsDoubleSolenoid1 = new DoubleSolenoid(0, 0, 1);
-        pneumaticsDoubleSolenoid2 = new DoubleSolenoid(0, 2, 3);
-        pneumaticsDoubleSolenoid3 = new DoubleSolenoid(0, 4, 5);
+        pneumaticsDoubleSolenoid1 = new DoubleSolenoid(1, 0, 1);
+        pneumaticsDoubleSolenoid2 = new DoubleSolenoid(1, 2, 3);
+        pneumaticsDoubleSolenoid3 = new DoubleSolenoid(1, 4, 5);
         
     }
 }
