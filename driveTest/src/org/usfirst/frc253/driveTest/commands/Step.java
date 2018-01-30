@@ -8,13 +8,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Step extends PIDCommand {
+public class Step extends Command {
 
 	private final double leftVelocity;
 	private final double rightVelocity;
 	
     public Step(double left, double right) {
-    	super(0.1, 0, 0);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
@@ -29,9 +28,7 @@ public class Step extends PIDCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	getPIDController().setSetpoint(leftVelocity/rightVelocity);
-    	double ratio = getPIDController().get(); //left over right
-    	Robot.driveTrain.drive(leftVelocity + (ratio * rightVelocity) , rightVelocity + (leftVelocity / ratio));
+    	Robot.driveTrain.drive(leftVelocity, rightVelocity);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -47,17 +44,5 @@ public class Step extends PIDCommand {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
-
-	@Override
-	protected double returnPIDInput() {
-		// TODO Auto-generated method stub
-		return Robot.driveTrain.getTalonLeft().getSelectedSensorVelocity(0)/Robot.driveTrain.getTalonRight().getSelectedSensorVelocity(0);
-	}
-
-	@Override
-	protected void usePIDOutput(double output) {
-		// TODO Auto-generated method stub
-		SmartDashboard.putNumber("PIDRatio Output", output);
-	}
 }
 

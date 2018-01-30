@@ -53,6 +53,12 @@ public class ReadSensors extends Command {
     	SmartDashboard.putNumber("Left Position", -leftPos);
     	SmartDashboard.putNumber("Right Position", rightPos);
     	
+    	double leftSpd = Robot.driveTrain.getTalonLeft().getSelectedSensorVelocity(0)/4096 * (6*Math.PI)/12;
+    	double rightSpd = Robot.driveTrain.getTalonRight().getSelectedSensorVelocity(0)/4096 * (6*Math.PI)/12;
+    	
+    	SmartDashboard.putNumber("Left Speed", -leftSpd);
+    	SmartDashboard.putNumber("Right Speed", rightSpd);
+    	
     	SmartDashboard.putNumber("RT Axis", Robot.oi.controller.getTriggerAxis(GenericHID.Hand.kRight));
     }
 
