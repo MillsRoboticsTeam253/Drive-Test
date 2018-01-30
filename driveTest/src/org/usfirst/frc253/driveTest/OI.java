@@ -109,6 +109,8 @@ public class OI {
         SmartDashboard.putData("Solenoid 1 Reverse", new Solenoid1Reverse());
         SmartDashboard.putData("Solenoid 2 Forward", new Solenoid2Forward());
         SmartDashboard.putData("Solenoid 2 Reverse", new Solenoid2Reverse());
+        SmartDashboard.putData("Solenoid 3 Forward", new Solenoid3Forward());
+        SmartDashboard.putData("Solenoid 3 Reverse", new Solenoid3Reverse());
         SmartDashboard.putData("Solenoids Forward", new SolenoidsForward());
         SmartDashboard.putData("Solenoids Reverse", new SolenoidsReverse());
 
