@@ -70,8 +70,8 @@ public class RobotMap {
     	to the right side.*/
         pneumaticsCompressor1 = new Compressor(0);
         
-        pneumaticsDoubleSolenoid1 = new DoubleSolenoid(0, 1, 2);
-        pneumaticsDoubleSolenoid2 = new DoubleSolenoid(0, 3, 4);
+        pneumaticsDoubleSolenoid1 = new DoubleSolenoid(0, 0, 1);
+        pneumaticsDoubleSolenoid2 = new DoubleSolenoid(0, 2, 3);
         
         
     }

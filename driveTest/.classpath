@@ -11,5 +11,7 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRE_Phoenix-sources.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/CTRE_Phoenix.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/annotations-15.0.jar"/>
+	<classpathentry kind="var" path="USERLIBS_DIR/jackson-annotations-2.9.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
