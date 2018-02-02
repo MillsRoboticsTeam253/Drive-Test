@@ -44,9 +44,11 @@ public class DriveTrain extends Subsystem {
     public DriveTrain(){
     	leftBack.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1, 10); 
 		leftBack.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		leftBack.setInverted(true);
 		
 		rightBack.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1, 10); 
 		rightBack.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		rightBack.setInverted(false);
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -72,7 +74,7 @@ public class DriveTrain extends Subsystem {
     
     public void drive(double left, double right){
     	leftFront.set(-left);
-    	leftBack.set(ControlMode.PercentOutput, -left);
+    	leftBack.set(ControlMode.PercentOutput, left);
     	rightFront.set(right);
     	rightBack.set(ControlMode.PercentOutput, right);
     }

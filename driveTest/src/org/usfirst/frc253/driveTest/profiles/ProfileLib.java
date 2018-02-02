@@ -1,7 +1,7 @@
 package org.usfirst.frc253.driveTest.profiles;
 
 public class ProfileLib {
-	private static double[][] straightTenFeetRaw = new double[][]{
+	public static double[][] straightTenFeetRaw = new double[][]{
 			{0.003704, 0.148148},
 			{0.014815, 0.222222},
 			{0.033333, 0.37037},

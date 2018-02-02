@@ -44,7 +44,11 @@ public class Profile{
 		return kNumPoints;
 	}
 	
-	public ArrayList<TrajectoryPoint> getPoints(){
+	public double[][] getPoints(){
+		return points;
+	}
+	
+	public ArrayList<TrajectoryPoint> getTrajPoints(){
 		return trajPoints;
 	}
 }
