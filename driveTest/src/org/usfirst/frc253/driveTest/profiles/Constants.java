@@ -37,8 +37,8 @@ public class Constants {
 	public static final int kBaseTrajPeriodMs = 0;
 
 	/**
-	 * Motor deadband, set to 1%.
+	 * Motor deadband, set to 4%.
 	 */
-	public static final double kNeutralDeadband = 0.01;
+	public static final double kNeutralDeadband = 0.04;
 }
 

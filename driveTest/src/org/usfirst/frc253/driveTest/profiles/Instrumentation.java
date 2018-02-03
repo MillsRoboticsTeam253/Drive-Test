@@ -24,6 +24,8 @@
  */
 package org.usfirst.frc253.driveTest.profiles;
 
+import org.usfirst.frc253.driveTest.Robot;
+
 import com.ctre.phoenix.motion.*;
 
 public class Instrumentation {
@@ -50,8 +52,9 @@ public class Instrumentation {
 		return _table[sv.value];
 	}
 
-	public static void process(MotionProfileStatus status, double pos,
-			double vel, double heading) {
+	public static void process(MotionProfileStatus statusL, double posL,
+			double velL, double headingL, MotionProfileStatus statusR, double posR,
+			double velR, double headingR) {
 		double now = edu.wpi.first.wpilibj.Timer.getFPGATimestamp();
 
 		if ((now - timeout) > 0.2) {
@@ -61,7 +64,7 @@ public class Instrumentation {
 			if (--count <= 0) {
 				count = 8;
 				/* every 8 loops, print our columns */
-
+				System.out.format("%-9s\t", "side");
 				System.out.format("%-9s\t", "outEn");
 				System.out.format("%-9s\t", "topCnt");
 				System.out.format("%-9s\t", "topRem");
@@ -71,27 +74,49 @@ public class Instrumentation {
 				System.out.format("%-9s\t", "IsUnder");
 				System.out.format("%-9s\t", "IsLast");
 				System.out.format("%-9s\t", "targPos");
+				System.out.format("%-9s\t", "readPos");
 				System.out.format("%-9s\t", "targVel");
+				System.out.format("%-9s\t", "readVel");
 				System.out.format("%-9s\t", "SlotSel0");
-				System.out.format("%-9s\t", "timeDurMs");
-
+				System.out.format("%-9s\t\t", "timeDurMs");
 				System.out.format("\n");
 			}
 			/* every loop, print our values */
-			System.out.format("%-9s\t", StrOutputEnable(status.outputEnable));
-			System.out.format("%-9s\t", status.topBufferCnt);
-			System.out.format("%-9s\t", status.topBufferRem);
-			System.out.format("%-9s\t", status.btmBufferCnt);
-			System.out.format("%-9s\t", (status.activePointValid ? "1" : ""));
-			System.out.format("%-9s\t", (status.hasUnderrun ? "1" : ""));
-			System.out.format("%-9s\t", (status.isUnderrun ? "1" : ""));
-			System.out.format("%-9s\t", (status.isLast ? "1" : ""));
-			System.out.format("%-9s\t", pos);
-			System.out.format("%-9s\t", vel);
-			System.out.format("%-9s\t", status.profileSlotSelect);
-			System.out.format("%-9s\t", status.timeDurMs);
+			System.out.format("%-9s\t\t", "left");
+			System.out.format("%-9s\t\t", StrOutputEnable(statusL.outputEnable));
+			System.out.format("%-9s\t\t", statusL.topBufferCnt);
+			System.out.format("%-9s\t\t", statusL.topBufferRem);
+			System.out.format("%-9s\t\t\t", statusL.btmBufferCnt);
+			System.out.format("%-9s\t", (statusL.activePointValid ? "true" : "false"));
+			System.out.format("%-9s\t\t", (statusL.hasUnderrun ? "true" : "false"));
+			System.out.format("%-9s\t", (statusL.isUnderrun ? "true" : "false"));
+			System.out.format("%-9s\t", (statusL.isLast ? "true" : "false"));
+			System.out.format("%-9s\t\t", posL);
+			System.out.format("%-9s\t\t", Robot.driveTrain.getTalonLeft().getSelectedSensorPosition(0));
+			System.out.format("%-9s\t\t", velL);
+			System.out.format("%-9s\t\t", Robot.driveTrain.getTalonLeft().getSelectedSensorVelocity(0));
+			System.out.format("%-9s\t\t", statusL.profileSlotSelect);
+			System.out.format("%-9s\t\t", statusL.timeDurMs);
 
 			System.out.format("\n");
+			
+			System.out.format("%-9s\t\t", "right");
+			System.out.format("%-9s\t\t", StrOutputEnable(statusR.outputEnable));
+			System.out.format("%-9s\t\t", statusR.topBufferCnt);
+			System.out.format("%-9s\t\t", statusR.topBufferRem);
+			System.out.format("%-9s\t\t\t", statusR.btmBufferCnt);
+			System.out.format("%-9s\t", (statusR.activePointValid ? "true" : "false"));
+			System.out.format("%-9s\t\t", (statusR.hasUnderrun ? "true" : "false"));
+			System.out.format("%-9s\t", (statusR.isUnderrun ? "true" : "false"));
+			System.out.format("%-9s\t", (statusR.isLast ? "true" : "false"));
+			System.out.format("%-9s\t\t", posR);
+			System.out.format("%-9s\t\t", Robot.driveTrain.getTalonRight().getSelectedSensorPosition(0));
+			System.out.format("%-9s\t\t", velR);
+			System.out.format("%-9s\t\t", Robot.driveTrain.getTalonRight().getSelectedSensorVelocity(0));
+			System.out.format("%-9s\t\t", statusR.profileSlotSelect);
+			System.out.format("%-9s\t\t\t", statusR.timeDurMs);
+			
+			System.out.format("\n\n");
 		}
 	}
 }

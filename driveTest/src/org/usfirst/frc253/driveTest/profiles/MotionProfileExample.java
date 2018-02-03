@@ -29,6 +29,9 @@ import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc253.driveTest.Robot;
 
 import com.ctre.phoenix.motion.*;
 import com.ctre.phoenix.motion.TrajectoryPoint.TrajectoryDuration;
@@ -120,9 +123,9 @@ public class MotionProfileExample {
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
 		 */
-		_talonLeft.changeMotionControlFramePeriod(25);
-		_talonRight.changeMotionControlFramePeriod(25);
-		_notifer.startPeriodic(0.025);
+		_talonLeft.changeMotionControlFramePeriod(5);
+		_talonRight.changeMotionControlFramePeriod(5);
+		_notifer.startPeriodic(0.005);
 	}
 
 	/**
@@ -254,8 +257,7 @@ public class MotionProfileExample {
 			_velR = _talonLeft.getActiveTrajectoryVelocity();			
 
 			/* printfs and/or logging */
-			Instrumentation.process(_statusLeft, _posL, _velL, _headingL);
-			Instrumentation.process(_statusRight, _posR, _velR, _headingR);
+			Instrumentation.process(_statusLeft, _posL, _velL, _headingL, _statusRight, _posR, _velR, _headingR);
 		}
 	}
 	/**
@@ -319,9 +321,9 @@ public class MotionProfileExample {
 			double velocityRPMR = profileRight[i][1];
 			/* for each point, fill our structure and pass it to API */
 			pointL.position = feetToRotations(positionRotL) * Constants.kSensorUnitsPerRotation; //Convert Revolutions to Units
-			pointL.velocity = feetToRotations(velocityRPML) * Constants.kSensorUnitsPerRotation / 600.0; //Convert RPM to Units/100ms
+			pointL.velocity = 4 * feetToRotations(velocityRPML) * Constants.kSensorUnitsPerRotation / 300.0; //Convert RPM to Units/100ms
 			pointR.position = feetToRotations(positionRotR) * Constants.kSensorUnitsPerRotation; //Convert Revolutions to Units
-			pointR.velocity = feetToRotations(velocityRPMR) * Constants.kSensorUnitsPerRotation / 600.0; //Convert RPM to Units/100ms
+			pointR.velocity = feetToRotations(velocityRPMR) * Constants.kSensorUnitsPerRotation / 300.0; //Convert RPM to Units/100ms
 			pointL.headingDeg = 0; /* future feature - not used in this example*/
 			pointL.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
 			pointL.profileSlotSelect1 = 0; /* future feature  - not used in this example - cascaded PID [0,1], leave zero */
