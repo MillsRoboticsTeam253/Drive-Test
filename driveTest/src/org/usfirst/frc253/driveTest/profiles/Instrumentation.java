@@ -77,6 +77,7 @@ public class Instrumentation {
 				System.out.format("%-9s\t", "readPos");
 				System.out.format("%-9s\t", "targVel");
 				System.out.format("%-9s\t", "readVel");
+				System.out.format("%-9s\t", "sentVlt");
 				System.out.format("%-9s\t", "SlotSel0");
 				System.out.format("%-9s\t\t", "timeDurMs");
 				System.out.format("\n");
@@ -95,6 +96,9 @@ public class Instrumentation {
 			System.out.format("%-9s\t\t", Robot.driveTrain.getTalonLeft().getSelectedSensorPosition(0));
 			System.out.format("%-9s\t\t", velL);
 			System.out.format("%-9s\t\t", Robot.driveTrain.getTalonLeft().getSelectedSensorVelocity(0));
+			System.out.format("%-9s\t", Robot.driveTrain.getTalonLeft().get);
+			//TODO left side is getting a constant 1.0 output percent despite not seeming to move at all
+			//TODO left is receiving a consistently higher voltage than right but doesn't move as much
 			System.out.format("%-9s\t\t", statusL.profileSlotSelect);
 			System.out.format("%-9s\t\t", statusL.timeDurMs);
 
@@ -113,6 +117,7 @@ public class Instrumentation {
 			System.out.format("%-9s\t\t", Robot.driveTrain.getTalonRight().getSelectedSensorPosition(0));
 			System.out.format("%-9s\t\t", velR);
 			System.out.format("%-9s\t\t", Robot.driveTrain.getTalonRight().getSelectedSensorVelocity(0));
+			System.out.format("%-9s\t", Robot.driveTrain.getTalonRight().getMotorOutputVoltage());
 			System.out.format("%-9s\t\t", statusR.profileSlotSelect);
 			System.out.format("%-9s\t\t\t", statusR.timeDurMs);
 			

@@ -321,7 +321,7 @@ public class MotionProfileExample {
 			double velocityRPMR = profileRight[i][1];
 			/* for each point, fill our structure and pass it to API */
 			pointL.position = feetToRotations(positionRotL) * Constants.kSensorUnitsPerRotation; //Convert Revolutions to Units
-			pointL.velocity = 4 * feetToRotations(velocityRPML) * Constants.kSensorUnitsPerRotation / 300.0; //Convert RPM to Units/100ms
+			pointL.velocity = feetToRotations(velocityRPML) * Constants.kSensorUnitsPerRotation / 300.0; //Convert RPM to Units/100ms
 			pointR.position = feetToRotations(positionRotR) * Constants.kSensorUnitsPerRotation; //Convert Revolutions to Units
 			pointR.velocity = feetToRotations(velocityRPMR) * Constants.kSensorUnitsPerRotation / 300.0; //Convert RPM to Units/100ms
 			pointL.headingDeg = 0; /* future feature - not used in this example*/
