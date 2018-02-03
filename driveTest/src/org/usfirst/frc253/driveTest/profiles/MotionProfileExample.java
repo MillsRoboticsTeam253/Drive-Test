@@ -23,13 +23,15 @@
  */
 package org.usfirst.frc253.driveTest.profiles;
 
-import com.ctre.phoenix.motion.MotionProfileStatus;
-import com.ctre.phoenix.motion.SetValueMotionProfile;
-import com.ctre.phoenix.motion.TrajectoryPoint;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.*;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
+
+import com.ctre.phoenix.motion.*;
+import com.ctre.phoenix.motion.TrajectoryPoint.TrajectoryDuration;
 
 public class MotionProfileExample {
 
@@ -40,6 +42,9 @@ public class MotionProfileExample {
 	 */
 	private MotionProfileStatus _statusLeft = new MotionProfileStatus();
 	private MotionProfileStatus _statusRight = new MotionProfileStatus();
+	/** additional cache for holding the active trajectory point */
+	double _posL=0,_velL=0,_headingL=0,_posR=0,_velR=0,_headingR=0;
+
 	/**
 	 * reference to the talon we plan on manipulating. We will not changeMode()
 	 * or call set(), just get motion profile status and make decisions based on
@@ -94,12 +99,11 @@ public class MotionProfileExample {
 	 * every 10ms.
 	 */
 	class PeriodicRunnable implements java.lang.Runnable {
-	    public void run() {
+	    public void run() {  
 	    	_talonLeft.processMotionProfileBuffer();
 	    	_talonRight.processMotionProfileBuffer();
 	    }
 	}
-	
 	Notifier _notifer = new Notifier(new PeriodicRunnable());
 	
 
@@ -116,9 +120,9 @@ public class MotionProfileExample {
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
 		 */
-		_talonLeft.changeMotionControlFramePeriod(5);
-		_talonRight.changeMotionControlFramePeriod(5);
-		_notifer.startPeriodic(0.005);
+		_talonLeft.changeMotionControlFramePeriod(25);
+		_talonRight.changeMotionControlFramePeriod(25);
+		_notifer.startPeriodic(0.025);
 	}
 
 	/**
@@ -152,6 +156,7 @@ public class MotionProfileExample {
 		/* Get the motion profile status every loop */
 		_talonLeft.getMotionProfileStatus(_statusLeft);
 		_talonRight.getMotionProfileStatus(_statusRight);
+
 		/*
 		 * track time, this is rudimentary but that's okay, we just want to make
 		 * sure things never get stuck.
@@ -165,7 +170,7 @@ public class MotionProfileExample {
 				 * something is wrong. Talon is not present, unplugged, breaker
 				 * tripped
 				 */
-				instrumentation.OnNoProgress();
+				Instrumentation.OnNoProgress();
 			} else {
 				--_loopTimeout;
 			}
@@ -226,7 +231,7 @@ public class MotionProfileExample {
 					 * another. We will go into hold state so robot servo's
 					 * position.
 					 */
-					if (_statusLeft.activePointValid && _statusRight.activePointValid && _statusLeft.isLast && _statusRight.isLast) {
+					if (_statusLeft.activePointValid && _statusLeft.isLast && _statusRight.activePointValid && _statusRight.isLast) {
 						/*
 						 * because we set the last point's isLast to true, we will
 						 * get here when the MP is done
@@ -237,34 +242,64 @@ public class MotionProfileExample {
 					}
 					break;
 			}
-		}
-		/* printfs and/or logging */
-		instrumentation.process(_statusLeft);
-		instrumentation.process(_statusRight);
-	}
 
+			/* Get the motion profile status every loop */
+			_talonLeft.getMotionProfileStatus(_statusLeft);
+			_headingL = _talonLeft.getActiveTrajectoryHeading();
+			_posL = _talonLeft.getActiveTrajectoryPosition();
+			_velL = _talonLeft.getActiveTrajectoryVelocity();
+			_talonRight.getMotionProfileStatus(_statusRight);
+			_headingR = _talonRight.getActiveTrajectoryHeading();
+			_posR = _talonRight.getActiveTrajectoryPosition();
+			_velR = _talonLeft.getActiveTrajectoryVelocity();			
+
+			/* printfs and/or logging */
+			Instrumentation.process(_statusLeft, _posL, _velL, _headingL);
+			Instrumentation.process(_statusRight, _posR, _velR, _headingR);
+		}
+	}
+	/**
+	 * Find enum value if supported.
+	 * @param durationMs
+	 * @return enum equivalent of durationMs
+	 */
+	private TrajectoryDuration GetTrajectoryDuration(int durationMs)
+	{	 
+		/* create return value */
+		TrajectoryDuration retval = TrajectoryDuration.Trajectory_Duration_0ms;
+		/* convert duration to supported type */
+		retval = retval.valueOf(durationMs);
+		/* check that it is valid */
+		if (retval.value != durationMs) {
+			DriverStation.reportError("Trajectory Duration not supported - use configMotionProfileTrajectoryPeriod instead", false);		
+		}
+		/* pass to caller */
+		return retval;
+	}
 	/** Start filling the MPs to all of the involved Talons. */
 	private void startFilling() {
 		/* since this example only has one talon, just update that one */
-		startFilling(ProfileLib.StraightTenFeetLeft.getPoints(), ProfileLib.StraightTenFeetRight.getPoints(), ProfileLib.StraightTenFeetLeft.getNumPoints());
+		startFilling(ProfileLib.straightTenFeetRaw, ProfileLib.straightTenFeetRaw, 79);
 	}
 
 	private void startFilling(double[][] profileLeft, double[][] profileRight, int totalCnt) {
 
 		/* create an empty point */
-		TrajectoryPoint pointLeft = new TrajectoryPoint();
-		TrajectoryPoint pointRight = new TrajectoryPoint();
-		
+		TrajectoryPoint pointL = new TrajectoryPoint();
+		TrajectoryPoint pointR = new TrajectoryPoint();
+
+
 		/* did we get an underrun condition since last time we checked ? */
 		if (_statusLeft.hasUnderrun || _statusRight.hasUnderrun) {
 			/* better log it so we know about it */
-			instrumentation.OnUnderrun();
+			Instrumentation.OnUnderrun();
 			/*
 			 * clear the error. This flag does not auto clear, this way 
 			 * we never miss logging it.
 			 */
 			_talonLeft.clearMotionProfileHasUnderrun(0);
 			_talonRight.clearMotionProfileHasUnderrun(0);
+
 		}
 		/*
 		 * just in case we are interrupting another MP and there is still buffer
@@ -272,50 +307,54 @@ public class MotionProfileExample {
 		 */
 		_talonLeft.clearMotionProfileTrajectories();
 		_talonRight.clearMotionProfileTrajectories();
-
+		/* set the base trajectory period to zero, use the individual trajectory period below */
+		_talonLeft.configMotionProfileTrajectoryPeriod(Constants.kBaseTrajPeriodMs, Constants.kTimeoutMs);
+		_talonRight.configMotionProfileTrajectoryPeriod(Constants.kBaseTrajPeriodMs, Constants.kTimeoutMs);
+		
 		/* This is fast since it's just into our TOP buffer */
 		for (int i = 0; i < totalCnt; ++i) {
+			double positionRotL = profileLeft[i][0];
+			double velocityRPML = profileLeft[i][1];
+			double positionRotR = profileRight[i][0];
+			double velocityRPMR = profileRight[i][1];
 			/* for each point, fill our structure and pass it to API */
-			pointLeft.position = feetToTicks(profileLeft[i][0]);
-			pointLeft.velocity = feetToTicks(profileLeft[i][1]) / 10;
-			pointLeft.profileSlotSelect = 0; /* which set of gains would you like to use? */
-			/* set true to not do any position
-										 * servo, just velocity feedforward
-										 */
-			pointLeft.zeroPos = false;
-			if (i == 0)
-				pointLeft.zeroPos = true; /* set this to true on the first point */
+			pointL.position = feetToRotations(positionRotL) * Constants.kSensorUnitsPerRotation; //Convert Revolutions to Units
+			pointL.velocity = feetToRotations(velocityRPML) * Constants.kSensorUnitsPerRotation / 600.0; //Convert RPM to Units/100ms
+			pointR.position = feetToRotations(positionRotR) * Constants.kSensorUnitsPerRotation; //Convert Revolutions to Units
+			pointR.velocity = feetToRotations(velocityRPMR) * Constants.kSensorUnitsPerRotation / 600.0; //Convert RPM to Units/100ms
+			pointL.headingDeg = 0; /* future feature - not used in this example*/
+			pointL.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
+			pointL.profileSlotSelect1 = 0; /* future feature  - not used in this example - cascaded PID [0,1], leave zero */
+			pointL.timeDur = GetTrajectoryDuration((int)profileLeft[i][2]);
+			pointL.zeroPos = false;
+			pointR.headingDeg = 0; /* future feature - not used in this example*/
+			pointR.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
+			pointR.profileSlotSelect1 = 0; /* future feature  - not used in this example - cascaded PID [0,1], leave zero */
+			pointR.timeDur = GetTrajectoryDuration((int)profileRight[i][2]);
+			pointR.zeroPos = false;
+			if (i == 0){
+				pointL.zeroPos = true; /* set this to true on the first point */
+				pointR.zeroPos = true;
+			}
+			pointL.isLastPoint = false;
+			pointR.isLastPoint = false;
+			if ((i + 1) == totalCnt){
+				pointL.isLastPoint = true;
+				pointR.isLastPoint = true;
+			}
+			/* set this to true on the last point  */
 
-			pointLeft.isLastPoint = false;
-			if ((i + 1) == totalCnt)
-				pointLeft.isLastPoint = true; /* set this to true on the last point  */
+			_talonLeft.pushMotionProfileTrajectory(pointL);
+			_talonRight.pushMotionProfileTrajectory(pointR);
 
-			pointRight.position = feetToTicks(profileRight[i][0]);
-			pointRight.velocity = feetToTicks(profileRight[i][1]) / 10;
-			pointRight.profileSlotSelect = 0; /* which set of gains would you like to use? */
-			/* set true to not do any position
-										 * servo, just velocity feedforward
-										 */
-			pointRight.zeroPos = false;
-			if (i == 0)
-				pointRight.zeroPos = true; /* set this to true on the first point */
-
-			pointRight.isLastPoint = false;
-			if ((i + 1) == totalCnt)
-				pointRight.isLastPoint = true; /* set this to true on the last point  */
-
-			_talonLeft.pushMotionProfileTrajectory(pointLeft);
-			_talonRight.pushMotionProfileTrajectory(pointRight);
 		}
 	}
-
 	/**
 	 * Called by application to signal Talon to start the buffered MP (when it's
 	 * able to).
 	 */
 	public void startMotionProfile() {
 		_bStart = true;
-		System.out.println("Starting motion profile!");
 	}
 
 	/**
@@ -326,6 +365,10 @@ public class MotionProfileExample {
 	 */
 	public SetValueMotionProfile getSetValue() {
 		return _setValue;
+	}
+	
+	public static double feetToRotations(double feet){
+		return feet / (0.5 * Math.PI);
 	}
 	
 	public static double feetToTicks(double feet){
