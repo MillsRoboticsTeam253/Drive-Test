@@ -123,8 +123,8 @@ public class MotionProfileExample {
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
 		 */
-		_talonLeft.changeMotionControlFramePeriod(5);
-		_talonRight.changeMotionControlFramePeriod(5);
+		_talonLeft.changeMotionControlFramePeriod(10);
+		_talonRight.changeMotionControlFramePeriod(10);
 		_notifer.startPeriodic(0.005);
 	}
 
@@ -254,7 +254,7 @@ public class MotionProfileExample {
 			_talonRight.getMotionProfileStatus(_statusRight);
 			_headingR = _talonRight.getActiveTrajectoryHeading();
 			_posR = _talonRight.getActiveTrajectoryPosition();
-			_velR = _talonLeft.getActiveTrajectoryVelocity();			
+			_velR = _talonRight.getActiveTrajectoryVelocity();			
 
 			/* printfs and/or logging */
 			Instrumentation.process(_statusLeft, _posL, _velL, _headingL, _statusRight, _posR, _velR, _headingR);
