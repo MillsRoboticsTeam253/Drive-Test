@@ -19,6 +19,7 @@ import org.usfirst.frc253.driveTest.profiles.MotionProfileExample;
 
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
 /**
  *
@@ -56,6 +57,7 @@ public class TankDrive extends Command {
     	SmartDashboard.putNumber("Right Speed", rightSpeed);
     	
     	if(!Robot.oi.controller.getRawButton(7)){
+    		
     		double left;
     		double right;
     		if(Math.abs(Robot.oi.getLeftJoystickY())<=0.125){
@@ -79,8 +81,10 @@ public class TankDrive extends Command {
 	    	_example.reset();
     	}else{
     		SetValueMotionProfile setOutput = _example.getSetValue();
+    		
     		Robot.driveTrain.getTalonLeft().set(ControlMode.MotionProfile, setOutput.value);
     		Robot.driveTrain.getTalonRight().set(ControlMode.MotionProfile, setOutput.value);
+    		
     		if(Robot.oi.controller.getRawButtonPressed(8)){
     			_example.startMotionProfile();
     		}

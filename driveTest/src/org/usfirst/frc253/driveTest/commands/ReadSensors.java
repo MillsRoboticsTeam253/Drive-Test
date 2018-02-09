@@ -49,7 +49,7 @@ public class ReadSensors extends Command {
     	double leftPos = Robot.driveTrain.getTalonLeft().getSelectedSensorPosition(0);
     	double rightPos = Robot.driveTrain.getTalonRight().getSelectedSensorPosition(0);
     	
-    	SmartDashboard.putNumber("Left Position", -leftPos);
+    	SmartDashboard.putNumber("Left Position", leftPos);
     	SmartDashboard.putNumber("Right Position", rightPos);
     }
 
