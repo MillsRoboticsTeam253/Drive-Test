@@ -395,4 +395,8 @@ public class MotionProfileExample {
 	public static double feetToTicks(double feet){
 		return feet * 4096 / (0.5 * Math.PI);
 	}
+	
+	public void setPath(ArrayList<MotionProfileData> path){
+		_path = path;
+	}
 }

@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Arrays;
 
 public class Reader {
@@ -8,6 +9,8 @@ public class Reader {
 		
 		System.out.println("Number of lines: " + data.getNumLines());
 		System.out.println(Arrays.deepToString(data.getData()));
+		
+		System.out.println(new File(".").getAbsoluteFile());
 	}
 
 }
