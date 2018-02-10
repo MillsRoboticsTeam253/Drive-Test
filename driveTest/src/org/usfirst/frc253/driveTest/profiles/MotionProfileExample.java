@@ -31,6 +31,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.util.ArrayList;
+
 import org.usfirst.frc253.driveTest.Robot;
 
 import com.ctre.phoenix.motion.*;
@@ -92,6 +94,8 @@ public class MotionProfileExample {
 	 */
 	private static final int kNumLoopsTimeout = 10;
 	
+	private static ArrayList<MotionProfileData> _path;
+	
 	/**
 	 * Lets create a periodic task to funnel our trajectory points into our talon.
 	 * It doesn't need to be very accurate, just needs to keep pace with the motion
@@ -116,9 +120,23 @@ public class MotionProfileExample {
 	 * @param talon
 	 *            reference to Talon object to fetch motion profile status from.
 	 */
-	public MotionProfileExample(TalonSRX talonLeft, TalonSRX talonRight) {
+	public MotionProfileExample(ArrayList<MotionProfileData> path, TalonSRX talonLeft, TalonSRX talonRight) {
+		_path = path;
+		
 		_talonLeft = talonLeft;
 		_talonRight = talonRight;
+		/*
+		 * since our MP is 10ms per point, set the control frame rate and the
+		 * notifer to half that
+		 */
+		_talonLeft.changeMotionControlFramePeriod(25);
+		_talonRight.changeMotionControlFramePeriod(25);
+		_notifer.startPeriodic(0.025);
+	}
+	
+	public MotionProfileExample() {
+		_talonLeft = Robot.driveTrain.getTalonLeft();
+		_talonRight = Robot.driveTrain.getTalonRight();
 		/*
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
@@ -281,7 +299,8 @@ public class MotionProfileExample {
 	/** Start filling the MPs to all of the involved Talons. */
 	private void startFilling() {
 		/* since this example only has one talon, just update that one */
-		startFilling(ProfileLib.straightTenFeetRaw, ProfileLib.straightTenFeetRaw, 79);
+		startFilling(_path.get(0).getData(), _path.get(1).getData(), _path.get(0).getNumLines());
+		//startFilling(ProfileLib.straightTenFeetRaw, ProfileLib.straightTenFeetRaw, 79);
 	}
 
 	private void startFilling(double[][] profileLeft, double[][] profileRight, int totalCnt) {

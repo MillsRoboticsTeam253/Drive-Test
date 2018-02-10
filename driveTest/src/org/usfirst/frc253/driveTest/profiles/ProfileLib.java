@@ -1,5 +1,7 @@
 package org.usfirst.frc253.driveTest.profiles;
 
+import java.util.ArrayList;
+
 public class ProfileLib {
 	public static double[][] straightTenFeetRaw = new double[][]{
 			{0.003704, 0.148148, 50},
@@ -82,5 +84,12 @@ public class ProfileLib {
 			{10.0001, 0.000037, 50},
 			{10.0001, 0, 50}
 	};
+	
+	private static MotionProfileData straightTenFeetL = new MotionProfileData("StraightTenFeet_left", false, false, false);
+	private static MotionProfileData straightTenFeetR = new MotionProfileData("StraightTenFeet_right", false, false, false);
+	public static ArrayList<MotionProfileData> straightTenFeet = new ArrayList<MotionProfileData>() {{
+		add(straightTenFeetL);
+		add(straightTenFeetR);
+	}};
 	
 }
