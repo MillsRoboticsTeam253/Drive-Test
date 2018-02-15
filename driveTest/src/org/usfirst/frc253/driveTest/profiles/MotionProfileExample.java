@@ -129,9 +129,9 @@ public class MotionProfileExample {
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
 		 */
-		_talonLeft.changeMotionControlFramePeriod(25);
-		_talonRight.changeMotionControlFramePeriod(25);
-		_notifer.startPeriodic(0.025);
+		_talonLeft.changeMotionControlFramePeriod(5);
+		_talonRight.changeMotionControlFramePeriod(5);
+		_notifer.startPeriodic(0.005);
 	}
 	
 	public MotionProfileExample() {
@@ -141,9 +141,9 @@ public class MotionProfileExample {
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
 		 */
-		_talonLeft.changeMotionControlFramePeriod(25);
-		_talonRight.changeMotionControlFramePeriod(25);
-		_notifer.startPeriodic(0.025);
+		_talonLeft.changeMotionControlFramePeriod(5);
+		_talonRight.changeMotionControlFramePeriod(5);
+		_notifer.startPeriodic(0.005);
 	}
 
 	/**

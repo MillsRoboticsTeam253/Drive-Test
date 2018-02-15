@@ -58,10 +58,10 @@ public class DriveTrain extends Subsystem {
     	leftBack.setInverted(true);
     	rightBack.setInverted(true);
     	
-    	leftBack.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 50, Constants.kTimeoutMs); 
+    	leftBack.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs); 
 		leftBack.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		
-		rightBack.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 50, Constants.kTimeoutMs); 
+		rightBack.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.kTimeoutMs); 
 		rightBack.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		
 		leftBack.setSensorPhase(false);
