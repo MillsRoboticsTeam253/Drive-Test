@@ -45,4 +45,8 @@ public class ProfileLib {
 		add(new MotionProfileData("CDriveRightToSwitchCent_left.csv", false, false, false));
 		add(new MotionProfileData("CDriveRightToSwitchCent_right.csv", false, false, false));
 	}};
+	public static ArrayList<MotionProfileData> rightToScale = new ArrayList<MotionProfileData>(){{
+		add(new MotionProfileData("rightToScale_left.csv", false, false, false));
+		add(new MotionProfileData("rightToScale_right.csv", false, false, false));
+	}};
 } 
