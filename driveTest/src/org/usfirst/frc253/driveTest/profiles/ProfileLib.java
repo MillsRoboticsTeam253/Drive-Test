@@ -49,4 +49,9 @@ public class ProfileLib {
 		add(new MotionProfileData("rightToScale_left.csv", false, false, false));
 		add(new MotionProfileData("rightToScale_right.csv", false, false, false));
 	}};
+
+	public static ArrayList<MotionProfileData> RtoRSwitch = new ArrayList<MotionProfileData>(){{
+		add(new MotionProfileData("FieldRToRS_left.csv", false, false, false));
+		add(new MotionProfileData("FieldRToRS_right.csv", false, false, false));
+	}};
 } 
