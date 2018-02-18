@@ -54,4 +54,12 @@ public class ProfileLib {
 		add(new MotionProfileData("FieldRToRS_left.csv", false, false, false));
 		add(new MotionProfileData("FieldRToRS_right.csv", false, false, false));
 	}};
+	public static ArrayList<MotionProfileData> LToLSwitch = new ArrayList<MotionProfileData>(){{
+		add(new MotionProfileData("LToLSwitch_left.csv", false, false, false));
+		add(new MotionProfileData("LToLSwitch_right.csv", false, false, false));
+	}};
+	public static ArrayList<MotionProfileData> LToLScale = new ArrayList<MotionProfileData>(){{
+		add(new MotionProfileData("LToLScale_left.csv", false, false, false));
+		add(new MotionProfileData("LToLScale_right.csv", false, false, false));
+	}};
 } 
